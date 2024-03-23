@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Editor</title>
+    <style>
+  
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e0f7fa;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #0764f9;
+    }
+
+    #filter-options {
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #filter-options button {
+        margin-right: 10px;
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: rgb(252, 250, 250);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #filter-options button:hover {
+        background-color: #45a049;
+    }
+
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .image-box {
+        border: 2px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+    }
+
+    .image-label {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .custom-file-input {
+        display: none;
+    }
+
+    .custom-file-label {
+        background-color: #333;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .custom-file-label:hover {
+        background-color: #555;
+    }
+
+    #download-btn {
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+    }
+
+    #download-btn:hover {
+        background-color: #45a049;
+    }
+
+    .param-container {
+        display: none;
+        margin-top: 10px;
+    }
+
+    .param-container label {
+        margin-right: 5px;
+    }
+</style>
+</head>
+<body>
+    <h1>Image Editor</h1>
+
+    <div id="filter-options">
+        <button id="grayscale-btn">Grayscale</button>
+        <button id="cropping-btn">Crop</button>
+        <button id="rotating-btn">Rotate</button>
+        <button id="blur-btn">Blur</button>
+        <button id="contrast-btn">Contrast</button>
+        <button id="sharpen-btn">Sharpen</button>
+    </div>
+
+    <div id="crop-params" class="param-container">
+        <label for="crop-ratio">Crop Ratio:</label>
+        <select id="crop-ratio">
+            <option value="1:1">1:1</option>
+            <option value="4:3">4:3</option>
+            <option value="3:2">3:2</option>
+            <option value="16:9">16:9</option>
+        </select>
+    </div>
+
+    <div id="rotate-params" class="param-container">
+        <label for="angle">Angle:</label>
+        <input type="number" id="angle" name="angle" value="90">
+    </div>
+
+    <div id="blur-param" class="param-container">
+        <label for="blur">Blur:</label>
+        <input type="range" id="blur" name="blur" min="0" max="100" step="1" value="0">
+    </div>
+
+    <div id="contrast-param" class="param-container">
+        <label for="contrast">Contrast:</label>
+        <input type="range" id="contrast" name="contrast" min="0.1" max="3" step="0.1" value="1">
+    </div>
+
+    <div id="sharpen-param" class="param-container">
+        <label for="sharpen">Sharpen:</label>
+        <input type="range" id="sharpen" name="sharpen" min="0" max="2" step="0.1" value="1">
+    </div>
+
+    <main>
+        <!-- ... (Main content remains the same) ... -->
+        <div class="image-box" id="original-image-box" style="display: none;">
+            <div class="image-label">Original Image</div>
+            <img id="original-image" src="" alt="Original Image">
+        </div>
+        <label for="image-input" class="custom-file-label">Choose Image</label>
+        <input type="file" id="image-input" class="custom-file-input" accept="image/*"><br><br>
+        <div class="image-box" id="edited-image-box" style="display: none;">
+            <div class="image-label">Edited Image</div>
+            <img id="edited-image" src="" alt="Edited Image">
+            <br>
+            <button id="download-btn">Download Edited Image</button>
+        </div>
+    </main>
+
+    <script>
+        // ... (Variable declarations remain the same) ...
+        const imageInput = document.getElementById('image-input');
+    const originalImage = document.getElementById('original-image');
+    const editedImage = document.getElementById('edited-image');
+    const downloadBtn = document.getElementById('download-btn');
+    const originalImageBox = document.getElementById('original-image-box');
+    const editedImageBox = document.getElementById('edited-image-box');
+
+    let originalImageData;
+
+    // ... (Filter button variables remain the same) ...
+    const croppingBtn = document.getElementById('cropping-btn');
+    const rotatingBtn = document.getElementById('rotating-btn');
+    const grayscaleBtn = document.getElementById('grayscale-btn');
+    const blurBtn = document.getElementById('blur-btn');
+    const contrastBtn = document.getElementById('contrast-btn');
+    const sharpenBtn = document.getElementById('sharpen-btn');
+
+    // Define variables for parameter containers
+    const cropParams = document.getElementById('crop-params');
+    const rotateParams = document.getElementById('rotate-params');
+    const blurParam = document.getElementById('blur-param');
+    const contrastParam = document.getElementById('contrast-param');
+    const sharpenParam = document.getElementById('sharpen-param');
+
+
+        // Add event listeners for filter buttons
+        croppingBtn.addEventListener('click', () => {
+            toggleParamContainer(cropParams);
+            const cropRatio = document.getElementById('crop-ratio').value;
+            const params = getCropParams(cropRatio);
+            applyFilter('cropping', params);
+        });
+
+        rotatingBtn.addEventListener('click', () => {
+            toggleParamContainer(rotateParams);
+            applyFilter('rotating', {
+                angle: document.getElementById('angle').value
+            });
+        });
+
+        grayscaleBtn.addEventListener('click', () => {
+            applyFilter('grayscale');
+        });
+
+        blurBtn.addEventListener('input', () => {
+            toggleParamContainer(blurParam);
+            const blurValue = document.getElementById('blur').value;
+            if (blurValue > 0) {
+                applyFilter('blur', { blur: blurValue });
+            } else {
+                applyFilter('reset');
+            }
+        });
+
+        contrastBtn.addEventListener('input', () => {
+            toggleParamContainer(contrastParam);
+            applyFilter('contrast', {
+                contrast: document.getElementById('contrast').value
+            });
+        });
+
+        sharpenBtn.addEventListener('input', () => {
+            toggleParamContainer(sharpenParam);
+            const sharpenValue = document.getElementById('sharpen').value;
+            if (sharpenValue > 1) {
+                applyFilter('sharpen', { sharpen: sharpenValue });
+            } else {
+                applyFilter('reset');
+            }
+        });
+
+        // ... (Image input and download button event listeners remain the same) ...
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = () => {
+                originalImage.src = reader.result;
+                editedImage.src = reader.result;
+                originalImageData = reader.result.split(',')[1]; // Store the original image data
+                originalImageBox.style.display = 'block';
+                editedImageBox.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'edited-image.png';
+            link.href = editedImage.src;
+            link.click();
+        });
+
+        function applyFilter(filterType, params = null) {
+            const formData = new FormData();
+            formData.append('image', 'data:image/png;base64,' + originalImageData);
+            formData.append('filter', filterType);
+
+            if (params !== null) {
+                Object.keys(params).forEach(key => {
+                    formData.append(key, params[key]);
+                });
+            }
+
+            fetch('/apply_filter', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (filterType === 'reset') {
+                    editedImage.src = 'data:image/png;base64,' + originalImageData;
+                } else {
+                    editedImage.src = 'data:image/png;base64,' + data;
+                }
+            });
+        }
+
+        function toggleParamContainer(container) {
+            const containers = document.querySelectorAll('.param-container');
+            containers.forEach(c => c.style.display = 'none');
+            container.style.display = 'block';
+        }
+
+        function getCropParams(cropRatio) {
+            const [width, height] = cropRatio.split(':');
+            const aspectRatio = width / height;
+            const originalWidth = originalImage.width;
+            const originalHeight = originalImage.height;
+            const originalAspectRatio = originalWidth / originalHeight;
+
+            let left, top, right, bottom;
+            if (originalAspectRatio > aspectRatio) {
+                const cropWidth = originalHeight * aspectRatio;
+                left = (originalWidth - cropWidth) / 2;
+                right = left + cropWidth;
+                top = 0;
+                bottom = originalHeight;
+            } else {
+                const cropHeight = originalWidth / aspectRatio;
+                top = (originalHeight - cropHeight) / 2;
+                bottom = top + cropHeight;
+                left = 0;
+                right = originalWidth;
+            }
+
+            return { left: Math.round(left), top: Math.round(top), right: Math.round(right), bottom: Math.round(bottom) };
+        }
+    </script>
+</body>
+</html>
