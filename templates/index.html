@@ -1,118 +1,173 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImageCraft</title>
     <style>
-        /* ... (CSS styles remain the same) ... */
         body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #e0f7fa;
-    }
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0 20px; /* Add padding to left and right sides */
+            background-color: #e0f7fa;
+        }
 
-    h1 {
-        text-align: center;
-        margin-top: 20px;
-        color: #0764f9;
-        font-family:  'poppins', sans-serif;
-    }
+        h1 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px; /* Add space below the heading */
+    letter-spacing: 2px; /* Add spacing between letters */
+    font-size: 36px; /* Increase font size */
+    color: #f90707;
+    font-family: monospace;
+}
 
-    #filter-options {
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
 
-    #filter-options button {
-        margin-right: 10px;
-        padding: 8px 16px;
-        background-color: #4CAF50;
-        color: rgb(252, 250, 250);
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+        #filter-options {
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            max-width: fit-content;
+            margin: 0 auto; /* Center along length */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            border: none;
+            border-radius: 4px;
+            margin-bottom: 20px; /* Added margin to separate from image input */
+        }
+        /* Center all labels and inputs below the filter options */
 
-    #filter-options button:hover {
-        background-color: #45a049;
-    }
+            .param-container {
+                text-align: center;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
 
-    main {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 20px;
-    }
+            .param-container label {
+                display: block;
+                margin-bottom: 5px;
+            }
 
-    .image-box {
-        border: 2px solid #ccc;
-        padding: 10px;
-        margin: 10px;
-        background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-    }
+            .param-container input[type="range"] {
+                width: 20%; /* Adjust width as needed */
+                margin: 0 auto 10px; /* Center horizontally and add margin below */
+            }
 
-    .image-label {
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
 
-    img {
-        max-width: 100%;
-        height: auto;
-    }
 
-    .custom-file-input {
-        display: none;
-    }
+        #filter-options button {
+            margin-right: 10px;
+            padding: 8px 24px;
+            background-color: #4CAF50;
+            color: rgb(252, 250, 250);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 10px;
+        }
 
-    .custom-file-label {
-        background-color: #333;
-        color: white;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+        #filter-options button:hover {
+            background-color: #45a049;
+        }
 
-    .custom-file-label:hover {
-        background-color: #555;
-    }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
 
-    #download-btn {
-        padding: 8px 16px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        margin-top: 10px;
-    }
+        .image-box {
+            border: 2px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            background-color: #fff;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            border: none;
+            border-radius: 4px;
+        }
 
-    #download-btn:hover {
-        background-color: #45a049;
-    }
+        .image-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-    .param-container {
-        display: none;
-        margin-top: 10px;
-    }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
 
-    .param-container label {
-        margin-right: 5px;
-    }
+        /* Added styles for the choose image container */
+        .choose-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: perspective(300px) rotateX(20deg); /* Inclining the container */
+            margin-bottom: 20px; /* Added margin to separate from filter options */
+            margin-left: 10%;
+        }
+
+        .custom-file-input {
+            display: none;
+            /* Removed box shadow and border-radius */
+        }
+
+        .custom-file-label {
+            background-color: #333;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            /* Added padding */
+            padding: 10px 20px;
+            /* Added box shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .custom-file-label:hover {
+            background-color: #555;
+        }
+
+
+        #download-btn {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        #download-btn:hover {
+            background-color: #45a049;
+        }
+
+        .param-container {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .param-container label {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
     <h1>ImageCraft</h1>
+
+    <!-- Moved the file input above the filter options -->
+    <input type="file" id="image-input" class="custom-file-input" accept="image/*">
+    <label for="image-input" class="custom-file-label">Choose Image</label><br><br>
 
     <div id="filter-options">
         <button id="grayscale-btn">Grayscale</button>
@@ -120,51 +175,56 @@
         <button id="rotating-btn">Rotate</button>
         <button id="blur-btn">Blur</button>
         <button id="contrast-btn">Contrast</button>
-        <button id="sharpen-btn">Sharpen</button>
+        <button id="vignette-btn">Vignette</button>
     </div>
 
-    <div id="crop-params" class="param-container">
-        <label for="crop-ratio">Crop Ratio:</label>
-        <select id="crop-ratio">
-            <option value="1:1">1:1</option>
-            <option value="4:3">4:3</option>
-            <option value="3:2">3:2</option>
-            <option value="16:9">16:9</option>
-        </select>
-    </div>
+<div id="crop-params" class="param-container">
+    <label for="crop-ratio-left">Left:</label>
+    <input type="range" id="crop-ratio-left" name="crop-ratio-left" min="0" max="100" step="1" value="0">
+    <span id="crop-ratio-left-value">0</span>
+    <label for="crop-ratio-right">Right:</label>
+    <input type="range" id="crop-ratio-right" name="crop-ratio-right" min="0" max="100" step="1" value="0">
+    <span id="crop-ratio-right-value">0</span>
+    <label for="crop-ratio-top">Top:</label>
+    <input type="range" id="crop-ratio-top" name="crop-ratio-top" min="0" max="100" step="1" value="0">
+    <span id="crop-ratio-top-value">0</span>
+    <label for="crop-ratio-bottom">Bottom:</label>
+    <input type="range" id="crop-ratio-bottom" name="crop-ratio-bottom" min="0" max="100" step="1" value="0">
+    <span id="crop-ratio-bottom-value">0</span>
+</div>
 
     <div id="rotate-params" class="param-container">
-        <label for="angle">Angle:</label>
-        <input type="number" id="angle" name="angle" value="90">
+        <label for="rotate-angle">Angle:</label>
+        <input type="range" id="rotate-angle" name="rotate-angle" min="1" max="180" step="1" value="90">
+        <span id="rotate-angle-value">90</span>
     </div>
 
     <div id="blur-param" class="param-container">
         <label for="blur">Blur:</label>
-        <input type="range" id="blur" name="blur" min="0" max="100" step="1" value="0">
+        <input type="range" id="blur" name="blur" min="0" max="100" step="1" value="5">
     </div>
 
     <div id="contrast-param" class="param-container">
         <label for="contrast">Contrast:</label>
-        <input type="range" id="contrast" name="contrast" min="0" max="2" step="0.1" value="1">
+        <input type="range" id="contrast" name="contrast" min="0.1" max="3" step="0.1" value="1">
     </div>
 
-    <div id="sharpen-param" class="param-container">
-        <label for="sharpen">Sharpen:</label>
-        <input type="range" id="sharpen" name="sharpen" min="0" max="2" step="0.1" value="1">
+    <div id="vignette-param" class="param-container">
+        <label for="vignette">Vignette Strength:</label>
+        <input type="range" id="vignette" name="vignette" min="0" max="255" step="1" value="1">
     </div>
 
     <main>
+        <!-- ... (Main content remains the same) ... -->
         <div class="image-box" id="original-image-box" style="display: none;">
             <div class="image-label">Original Image</div>
             <img id="original-image" src="" alt="Original Image">
         </div>
-        <label for="image-input" class="custom-file-label">Choose Image</label>
-        <input type="file" id="image-input" class="custom-file-input" accept="image/*"><br><br>
         <div class="image-box" id="edited-image-box" style="display: none;">
             <div class="image-label">Edited Image</div>
             <img id="edited-image" src="" alt="Edited Image">
             <br>
-            <button id="download-btn">Download Edited Image</button>
+            <button id="download-btn">Download</button>
         </div>
     </main>
 
@@ -177,54 +237,74 @@
         const editedImageBox = document.getElementById('edited-image-box');
 
         let originalImageData;
+        let originalImageWidth;
+        let originalImageHeight;
 
         const croppingBtn = document.getElementById('cropping-btn');
         const rotatingBtn = document.getElementById('rotating-btn');
         const grayscaleBtn = document.getElementById('grayscale-btn');
         const blurBtn = document.getElementById('blur-btn');
         const contrastBtn = document.getElementById('contrast-btn');
-        const sharpenBtn = document.getElementById('sharpen-btn');
+        const vignetteBtn = document.getElementById('vignette-btn');
 
         const cropParams = document.getElementById('crop-params');
         const rotateParams = document.getElementById('rotate-params');
         const blurParam = document.getElementById('blur-param');
         const contrastParam = document.getElementById('contrast-param');
-        const sharpenParam = document.getElementById('sharpen-param');
+        const vignetteParam = document.getElementById('vignette-param');
 
         croppingBtn.addEventListener('click', () => {
             toggleParamContainer(cropParams);
-            const cropRatio = document.getElementById('crop-ratio').value;
-            const params = getCropParams(cropRatio);
+            const params = getCropParams();
             applyFilter('cropping', params);
         });
 
         rotatingBtn.addEventListener('click', () => {
             toggleParamContainer(rotateParams);
-            applyFilter('rotating', {
-                angle: document.getElementById('angle').value
-            });
+            const angle = document.getElementById('rotate-angle').value;
+            applyFilter('rotating', { angle });
         });
 
         grayscaleBtn.addEventListener('click', () => {
             applyFilter('grayscale');
         });
 
-        blurBtn.addEventListener('input', () => {
+        blurBtn.addEventListener('click', () => {
             toggleParamContainer(blurParam);
             const blurValue = document.getElementById('blur').value;
             applyFilter('blur', { blur: blurValue });
         });
 
-        contrastBtn.addEventListener('input', () => {
+        contrastBtn.addEventListener('click', () => {
             toggleParamContainer(contrastParam);
             const contrastValue = document.getElementById('contrast').value;
             applyFilter('contrast', { contrast: contrastValue });
         });
 
-        sharpenBtn.addEventListener('input', () => {
-            toggleParamContainer(sharpenParam);
-            const sharpenValue = document.getElementById('sharpen').value;
-            applyFilter('sharpen', { sharpen: sharpenValue });
+        vignetteBtn.addEventListener('click', () => {
+            toggleParamContainer(vignetteParam);
+            const vignetteValue = document.getElementById('vignette').value;
+            applyFilter('vignette', { vignette: vignetteValue });
+        });
+
+        document.getElementById('crop-ratio-left').addEventListener('input', (e) => {
+            document.getElementById('crop-ratio-left-value').textContent = e.target.value;
+        });
+
+        document.getElementById('crop-ratio-right').addEventListener('input', (e) => {
+            document.getElementById('crop-ratio-right-value').textContent = e.target.value;
+        });
+
+        document.getElementById('crop-ratio-top').addEventListener('input', (e) => {
+            document.getElementById('crop-ratio-top-value').textContent = e.target.value;
+        });
+
+        document.getElementById('crop-ratio-bottom').addEventListener('input', (e) => {
+            document.getElementById('crop-ratio-bottom-value').textContent = e.target.value;
+        });
+
+        document.getElementById('rotate-angle').addEventListener('input', (e) => {
+            document.getElementById('rotate-angle-value').textContent = e.target.value;
         });
 
         imageInput.addEventListener('change', (e) => {
@@ -234,9 +314,17 @@
                 originalImage.src = reader.result;
                 editedImage.src = reader.result;
                 originalImageData = reader.result.split(',')[1];
+
+                const img = new Image();
+                img.onload = () => {
+                    originalImageWidth = img.width;
+                    originalImageHeight = img.height;
+                };
+                img.src = reader.result;
+
                 originalImageBox.style.display = 'block';
                 editedImageBox.style.display = 'block';
-            }
+            };
             reader.readAsDataURL(file);
         });
 
@@ -274,29 +362,13 @@
             container.style.display = 'block';
         }
 
-        function getCropParams(cropRatio) {
-            const [width, height] = cropRatio.split(':');
-            const aspectRatio = width / height;
-            const originalWidth = originalImage.width;
-            const originalHeight = originalImage.height;
-            const originalAspectRatio = originalWidth / originalHeight;
+        function getCropParams() {
+            const left = Math.round(originalImageWidth * (document.getElementById('crop-ratio-left').value / 100));
+            const right = Math.round(originalImageWidth * (1 - (document.getElementById('crop-ratio-right').value / 100)));
+            const top = Math.round(originalImageHeight * (document.getElementById('crop-ratio-top').value / 100));
+            const bottom = Math.round(originalImageHeight * (1 - (document.getElementById('crop-ratio-bottom').value / 100)));
 
-            let left, top, right, bottom;
-            if (originalAspectRatio > aspectRatio) {
-                const cropWidth = originalHeight * aspectRatio;
-                left = (originalWidth - cropWidth) / 2;
-                right = left + cropWidth;
-                top = 0;
-                bottom = originalHeight;
-            } else {
-                const cropHeight = originalWidth / aspectRatio;
-                top = (originalHeight - cropHeight) / 2;
-                bottom = top + cropHeight;
-                left = 0;
-                right = originalWidth;
-            }
-
-            return { left: Math.round(left), top: Math.round(top), right: Math.round(right), bottom: Math.round(bottom) };
+            return { left, top, right, bottom };
         }
     </script>
 </body>
