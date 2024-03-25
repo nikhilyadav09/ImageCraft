@@ -7,25 +7,31 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html')  # Render the index.html template when accessing the root route
 
+# Function to apply grayscale filter to an image
 def apply_grayscale(image):
     return image.convert('L')
 
+# Function to apply cropping to an image
 def apply_crop(image, left, top, right, bottom):
     width, height = image.size
     return image.crop((left, top, right, bottom))
 
+# Function to apply rotation to an image
 def apply_rotate(image, angle):
     return image.rotate(angle, expand=True)
 
+# Function to apply Gaussian blur to an image
 def apply_blur(image, radius):
     return image.filter(ImageFilter.GaussianBlur(radius=radius))
 
+# Function to apply contrast enhancement to an image
 def apply_contrast(image, factor):
     enhancer = ImageEnhance.Contrast(image)
     return enhancer.enhance(factor)
 
+# Function to apply vignette effect to an image
 def apply_vignette(image, strength, start_color='black'):
     width, height = image.size
     center_x, center_y = width // 2, height // 2
@@ -58,13 +64,19 @@ def apply_vignette(image, strength, start_color='black'):
 
     return vignette_image
 
+# Route to apply image filter
 @app.route('/apply_filter', methods=['POST'])
 def apply_filter():
+    # Get the base64-encoded image data from the form
     image_data = request.form['image'].split(',')[1]
+    # Decode the base64 data into bytes
     image_bytes = base64.b64decode(image_data.encode())
+    # Open the image using PIL
     image = Image.open(io.BytesIO(image_bytes))
+    # Get the type of filter to apply
     filter_type = request.form['filter']
 
+    # Apply the selected filter based on the filter type
     if filter_type == 'grayscale':
         image = apply_grayscale(image)
     elif filter_type == 'cropping':
@@ -88,11 +100,13 @@ def apply_filter():
     else:
         return "Invalid filter type", 400
 
+    # Convert the processed image back to base64-encoded string
     image_buffer = io.BytesIO()
     image.save(image_buffer, format='PNG')
     image_bytes = image_buffer.getvalue()
     encoded_image = base64.b64encode(image_bytes).decode('utf-8')
+    # Return the base64-encoded image string as the response
     return encoded_image, 200, {'Content-Type': 'text/plain'}
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True)  # Run the Flask application in debug mode if executed as main script

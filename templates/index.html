@@ -1,19 +1,20 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Title of the page -->
     <title>ImageCraft</title>
+        <!-- Internal CSS styles for page layout and elements -->
     <style>
+      /* Styling for the body */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0 20px;
             background-color: #e0f7fa;
         }
-
+        /* Styling for the main heading */
         h1 {
             text-align: center;
             margin-top: 20px;
@@ -40,7 +41,7 @@
             width: 20%;
             margin: 0 auto 10px;
         }
-
+        /* Styling for filter options container */
         #filter-options {
             padding: 10px;
             display: flex;
@@ -54,7 +55,7 @@
             border-radius: 4px;
             margin-bottom: 10px;
         }
-
+        /* Styling for filter option buttons */
         #filter-options button {
             margin-right: 10px;
             padding: 8px 24px;
@@ -68,63 +69,63 @@
             margin-bottom: 10px;
             margin-top: 10px;
         }
-
+        /* Button hover effect */
         #filter-options button:hover {
             background-color: #000000;
         }
-
+        /* Styling for the main content container */
         main {
             display: flex;
             justify-content: center;
             align-items: flex-start;
             padding: 20px;
         }
+        /* Styling for image boxes */
+                .image-box {
+            border: 2px solid rgb(252, 246, 246);
+            padding: 10px;
+            margin: 0 20px;
+            background-color: #fff;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            display: inline-block;
+            transition: border-color 0.3s; 
+        }
+        /* Image box hover effect */
+        .image-box:hover {
+            border-color: #333; 
+        }
 
-        .image-box {
-    border: 2px solid rgb(252, 246, 246);
-    padding: 10px;
-    margin: 0 20px;
-    background-color: #fff;
-    max-width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    display: inline-block;
-    transition: border-color 0.3s; /* Add transition for smooth color change */
-}
+        .image-box:first-child {
+            margin-left: 0;
+        }
 
-.image-box:hover {
-    border-color: #333; /* Darker border color on hover */
-}
-
-.image-box:first-child {
-    margin-left: 0;
-}
-
-.image-box:last-child {
-    margin-right: 0;
-}
-
+        .image-box:last-child {
+            margin-right: 0;
+        }
+        /* Styling for image labels */
         .image-label {
             font-weight: bold;
             margin-bottom: 10px;
         }
-
+        /* Styling for images inside image boxes */
         img {
             max-width: 100%;
             height: auto;
         }
-
+        /* Styling for file input container */
         .choose-image-container {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
         }
-
+        /* Custom file input style */
         .custom-file-input {
             display: none;
         }
-
+        /* Styling for custom file label */
         .custom-file-label {
             background-color: transparent;
             color: #000;
@@ -135,12 +136,12 @@
             transition: background-color 0.3s, color 0.3s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
+        /* Custom file label hover effect */
         .custom-file-label:hover {
             background-color: #000;
             color: #fff;
         }
-
+        /* Styling for download button */
         #download-btn {
             padding: 8px 16px;
             background-color: #4CAF50;
@@ -151,27 +152,30 @@
             transition: background-color 0.3s;
             margin-top: 10px;
         }
-
+        /* Download button hover effect */
         #download-btn:hover {
             background-color: #040404;
         }
-
+        /* Styling for parameter container */
         .param-container {
             display: none;
             margin-top: 10px;
         }
-
+        /* Styling for labels inside parameter container */
         .param-container label {
             margin-right: 5px;
         }
     </style>
 </head>
 <body>
+    <!-- Main heading -->
     <h1>ImageCraft</h1><br>
+    <!-- File input container -->
     <div class="choose-image-container">
         <input type="file" id="image-input" class="custom-file-input" accept="image/*">
         <label for="image-input" class="custom-file-label">Select Image</label>
     </div>
+    <!-- Filter options container -->
     <div id="filter-options" style="display: none;">
         <button id="grayscale-btn">Grayscale</button>
         <button id="cropping-btn">Crop</button>
@@ -181,7 +185,9 @@
         <button id="vignette-btn">Vignette</button>
     </div>
 
+    <!-- Parameter containers for various filters -->
 <div id="crop-params" class="param-container">
+        <!-- Crop parameters -->
     <label for="crop-ratio-left">Left:</label>
     <input type="range" id="crop-ratio-left" name="crop-ratio-left" min="0" max="100" step="1" value="0">
     <span id="crop-ratio-left-value">0</span>
@@ -195,104 +201,119 @@
     <input type="range" id="crop-ratio-bottom" name="crop-ratio-bottom" min="0" max="100" step="1" value="0">
     <span id="crop-ratio-bottom-value">0</span>
 </div>
-
+        <!-- rotate parameters -->
     <div id="rotate-params" class="param-container">
         <label for="rotate-angle">Angle:</label>
         <input type="range" id="rotate-angle" name="rotate-angle" min="1" max="360" step="1" value="90">
         <span id="rotate-angle-value">90</span>
     </div>
-
+        <!-- blur parameters -->
     <div id="blur-param" class="param-container">
         <label for="blur">Blur:</label>
         <input type="range" id="blur" name="blur" min="0" max="100" step="1" value="5">
     </div>
-
+        <!-- Contrast parameters -->
     <div id="contrast-param" class="param-container">
         <label for="contrast">Contrast:</label>
         <input type="range" id="contrast" name="contrast" min="0.1" max="3" step="0.1" value="10">
     </div>
-
+        <!-- Vignette parameters -->
     <div id="vignette-param" class="param-container">
         <label for="vignette">Vignette Strength:</label>
         <input type="range" id="vignette" name="vignette" min="0" max="255" step="1" value="5">
     </div>
-
+    <!-- ... Main content ... -->
     <main>
-        <!-- ... (Main content remains the same) ... -->
+
+        <!-- original Image Box -->
         <div class="image-box" id="original-image-box" style="display: none;">
             <div class="image-label">Original Image</div>
             <img id="original-image" src="" alt="Original Image">
         </div>
+            <!-- Edited Image Box -->
         <div class="image-box" id="edited-image-box" style="display: none;">
             <div class="image-label">Edited Image</div>
             <img id="edited-image" src="" alt="Edited Image">
             <br>
+            <!-- download button -->
             <button id="download-btn">Download</button>
         </div>
     </main>
-
+ 
+    <!-- JavaScript code for dynamic interactions -->
     <script>
-        const imageInput = document.getElementById('image-input');
-        const originalImage = document.getElementById('original-image');
-        const editedImage = document.getElementById('edited-image');
-        const downloadBtn = document.getElementById('download-btn');
-        const originalImageBox = document.getElementById('original-image-box');
-        const editedImageBox = document.getElementById('edited-image-box');
 
-        let originalImageData;
-        let originalImageWidth;
-        let originalImageHeight;
+        // JavaScript variables referencing HTML elements
+        const imageInput = document.getElementById('image-input'); // References the file input element for selecting an image
+        const originalImage = document.getElementById('original-image'); // References the <img> element for displaying the original image
+        const editedImage = document.getElementById('edited-image'); // References the <img> element for displaying the edited image
+        const downloadBtn = document.getElementById('download-btn'); // References the download button element
+        const originalImageBox = document.getElementById('original-image-box'); // References the container for the original image
+        const editedImageBox = document.getElementById('edited-image-box'); // References the container for the edited image
 
-        const croppingBtn = document.getElementById('cropping-btn');
-        const rotatingBtn = document.getElementById('rotating-btn');
-        const grayscaleBtn = document.getElementById('grayscale-btn');
-        const blurBtn = document.getElementById('blur-btn');
-        const contrastBtn = document.getElementById('contrast-btn');
-        const vignetteBtn = document.getElementById('vignette-btn');
+        // Variables to store image data
+        let originalImageData; // Variable to store the base64-encoded image data
+        let originalImageWidth; // Variable to store the width of the original image
+        let originalImageHeight; // Variable to store the height of the original image
 
-        const cropParams = document.getElementById('crop-params');
-        const rotateParams = document.getElementById('rotate-params');
-        const blurParam = document.getElementById('blur-param');
-        const contrastParam = document.getElementById('contrast-param');
-        const vignetteParam = document.getElementById('vignette-param');
+        // Event listeners for filter buttons
+        const croppingBtn = document.getElementById('cropping-btn'); // References the button for cropping
+        const rotatingBtn = document.getElementById('rotating-btn'); // References the button for rotating
+        const grayscaleBtn = document.getElementById('grayscale-btn'); // References the button for grayscale
+        const blurBtn = document.getElementById('blur-btn'); // References the button for blur
+        const contrastBtn = document.getElementById('contrast-btn'); // References the button for adjusting contrast
+        const vignetteBtn = document.getElementById('vignette-btn'); // References the button for applying vignette
 
+        // Event listeners for parameter input changes
+        const cropParams = document.getElementById('crop-params'); // References the container for cropping parameters
+        const rotateParams = document.getElementById('rotate-params'); // References the container for rotating parameters
+        const blurParam = document.getElementById('blur-param'); // References the container for blur parameter
+        const contrastParam = document.getElementById('contrast-param'); // References the container for contrast parameter
+        const vignetteParam = document.getElementById('vignette-param'); // References the container for vignette parameter 
+
+        // Event listeners for filter buttons
+        // Each button has an event listener to toggle the corresponding parameter container and apply the filter
         croppingBtn.addEventListener('click', () => {
             toggleParamContainer(cropParams);
             const params = getCropParams();
             applyFilter('cropping', params);
-        });
+        });/* Functionality for cropping button */
 
         rotatingBtn.addEventListener('click', () => {
             toggleParamContainer(rotateParams);
             const angle = document.getElementById('rotate-angle').value;
             applyFilter('rotating', { angle });
-        });
+        });/* Functionality for rotating button */
 
         grayscaleBtn.addEventListener('click', () => {
             applyFilter('grayscale');
-        });
+        });/* Functionality for grayscale button */
 
         blurBtn.addEventListener('click', () => {
             toggleParamContainer(blurParam);
             const blurValue = document.getElementById('blur').value;
             applyFilter('blur', { blur: blurValue });
-        });
+        });/* Functionality for blur button */ 
 
         contrastBtn.addEventListener('click', () => {
             toggleParamContainer(contrastParam);
             const contrastValue = document.getElementById('contrast').value;
             applyFilter('contrast', { contrast: contrastValue });
-        });
+        });/* Functionality for contrast button */ 
 
         vignetteBtn.addEventListener('click', () => {
             toggleParamContainer(vignetteParam);
             const vignetteValue = document.getElementById('vignette').value;
             applyFilter('vignette', { vignette: vignetteValue });
-        });
+        }); /* Functionality for vignette button */ 
 
+        // Event listeners for input changes in cropping and rotating parameters
+        // These event listeners update the displayed values as the user adjusts the input sliders
         document.getElementById('crop-ratio-left').addEventListener('input', (e) => {
             document.getElementById('crop-ratio-left-value').textContent = e.target.value;
-        });
+        });/* Update displayed value for left crop ratio */
+
+        // Similar event listeners for other crop ratio inputs and rotate angle input
 
         document.getElementById('crop-ratio-right').addEventListener('input', (e) => {
             document.getElementById('crop-ratio-right-value').textContent = e.target.value;
@@ -309,14 +330,15 @@
         document.getElementById('rotate-angle').addEventListener('input', (e) => {
             document.getElementById('rotate-angle-value').textContent = e.target.value;
         });
-
+        // Event listener for file input change
+        // This event listener triggers when the user selects an image file
         imageInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-        originalImage.src = reader.result;
-        editedImage.src = reader.result;
-        originalImageData = reader.result.split(',')[1];
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            originalImage.src = reader.result;
+            editedImage.src = reader.result;
+            originalImageData = reader.result.split(',')[1];
 
         const img = new Image();
         img.onload = () => {
@@ -329,18 +351,21 @@
 
         originalImageBox.style.display = 'block';
         editedImageBox.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-});
+            };
+            reader.readAsDataURL(file);
+        });/* Functionality for handling image selection */
 
-
+        // Event listener for download button
+        // This event listener triggers when the user clicks the download button
         downloadBtn.addEventListener('click', () => {
             const link = document.createElement('a');
             link.download = 'edited-image.png';
             link.href = editedImage.src;
             link.click();
-        });
+        });/* Functionality for downloading the edited image */ 
 
+        // Function to apply filter
+        // This function sends a request to the server to apply a filter to the image
         function applyFilter(filterType, params = null) {
             const formData = new FormData();
             formData.append('image', 'data:image/png;base64,' + originalImageData);
@@ -359,21 +384,24 @@
             .then(response => response.text())
             .then(data => {
                 editedImage.src = 'data:image/png;base64,' + data;
-            });
+            });/* Functionality for applying filter */
         }
-
+        // Function to toggle parameter container
+        // This function toggles the display of parameter containers based on the selected filter
         function toggleParamContainer(container) {
             const containers = document.querySelectorAll('.param-container');
             containers.forEach(c => c.style.display = 'none');
             container.style.display = 'block';
-        }
+        } /* Functionality for toggling parameter container */
 
+        // Function to get crop parameters
+        // This function calculates the crop parameters based on user input
         function getCropParams() {
             const left = Math.round(originalImageWidth * (document.getElementById('crop-ratio-left').value / 100));
             const right = Math.round(originalImageWidth * (1 - (document.getElementById('crop-ratio-right').value / 100)));
             const top = Math.round(originalImageHeight * (document.getElementById('crop-ratio-top').value / 100));
             const bottom = Math.round(originalImageHeight * (1 - (document.getElementById('crop-ratio-bottom').value / 100)));
-
+            /* Functionality for getting crop parameters */
             return { left, top, right, bottom };
         }
     </script>
