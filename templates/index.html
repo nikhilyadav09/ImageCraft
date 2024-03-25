@@ -52,7 +52,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border: none;
             border-radius: 4px;
-            margin-bottom: 20px;
             margin-bottom: 10px;
         }
 
@@ -66,6 +65,8 @@
             cursor: pointer;
             transition: background-color 0.3s;
             margin-left: 10px;
+            margin-bottom: 10px;
+            margin-top: 10px;
         }
 
         #filter-options button:hover {
@@ -80,15 +81,28 @@
         }
 
         .image-box {
-            border: 2px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-            background-color: #fff;
-            max-width: 400px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: none;
-            border-radius: 4px;
-        }
+    border: 2px solid rgb(252, 246, 246);
+    padding: 10px;
+    margin: 0 20px;
+    background-color: #fff;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    display: inline-block;
+    transition: border-color 0.3s; /* Add transition for smooth color change */
+}
+
+.image-box:hover {
+    border-color: #333; /* Darker border color on hover */
+}
+
+.image-box:first-child {
+    margin-left: 0;
+}
+
+.image-box:last-child {
+    margin-right: 0;
+}
 
         .image-label {
             font-weight: bold;
@@ -139,7 +153,7 @@
         }
 
         #download-btn:hover {
-            background-color: #45a049;
+            background-color: #040404;
         }
 
         .param-container {
@@ -184,7 +198,7 @@
 
     <div id="rotate-params" class="param-container">
         <label for="rotate-angle">Angle:</label>
-        <input type="range" id="rotate-angle" name="rotate-angle" min="1" max="180" step="1" value="90">
+        <input type="range" id="rotate-angle" name="rotate-angle" min="1" max="360" step="1" value="90">
         <span id="rotate-angle-value">90</span>
     </div>
 
@@ -195,12 +209,12 @@
 
     <div id="contrast-param" class="param-container">
         <label for="contrast">Contrast:</label>
-        <input type="range" id="contrast" name="contrast" min="0.1" max="3" step="0.1" value="1">
+        <input type="range" id="contrast" name="contrast" min="0.1" max="3" step="0.1" value="10">
     </div>
 
     <div id="vignette-param" class="param-container">
         <label for="vignette">Vignette Strength:</label>
-        <input type="range" id="vignette" name="vignette" min="0" max="255" step="1" value="1">
+        <input type="range" id="vignette" name="vignette" min="0" max="255" step="1" value="5">
     </div>
 
     <main>
